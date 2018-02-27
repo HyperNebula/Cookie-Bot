@@ -74,6 +74,7 @@ def cooldowncheck(x):
 async def bal(x, message):
     global balance
     global name
+    global Id
     global money_in
     global rowcomp
     global timer
@@ -86,7 +87,7 @@ async def bal(x, message):
             namenum += 1
 
             if x == 0:
-                if line[0] == name:
+                if line[0] == Id:
                     balance = line[1]
                     await client.send_message(message.channel, 'You have %s Cocoa Beans.' % balance)
                     break
@@ -94,13 +95,13 @@ async def bal(x, message):
                     await client.send_message(message.channel, 'Please register first using /bank register')
                     break
             elif x == 1:
-                if line[0] == name:
+                if line[0] == Id:
                     await client.send_message(message.channel, 'You already registered :P')
                     break
                 elif namenum == rowcomp:
                     with open('bot/_Bal.csv', 'a', newline='') as balc:
                         balWriter = csv.writer(balc)
-                        balWriter.writerow([name, 0])
+                        balWriter.writerow([Id, 0])
                     with open('bot/_robCooldown.csv', 'a', newline='') as balc:
                         balWriter = csv.writer(balc)
                         balWriter.writerow([name, 0])
@@ -113,10 +114,10 @@ async def bal(x, message):
                     await client.send_message(message.channel, 'Bank Registered')
                     break
             elif x == 2:
-                if line[0] == name:
+                if line[0] == Id:
                     df = pd.read_csv(
                         'bot/_Bal.csv')
-                    df.loc[df["Username"] == name, "Amount"] += money_in
+                    df.loc[df["Username"] == Id, "Amount"] += money_in
                     df.to_csv(
                         'bot/_Bal.csv', index=False)
                     break
@@ -125,10 +126,10 @@ async def bal(x, message):
                     await client.send_message(message.channel, 'Please register first using /bank register')
                     break
             elif x == 3:
-                if line[0] == name:
+                if line[0] == Id:
                     df = pd.read_csv(
                         'bot/_Bal.csv')
-                    df.loc[df["Username"] == name, "Amount"] -= money_in
+                    df.loc[df["Username"] == Id, "Amount"] -= money_in
                     df.to_csv(
                         'bot/_Bal.csv', index=False)
                     break
@@ -173,7 +174,7 @@ async def bal(x, message):
                     await client.send_message(message.channel, 'Please register a bank account first using /bank register')
                     break
             elif x == 7:
-                if line[0] == name:
+                if line[0] == Id:
                     balance = int(line[1])
                     break
                 elif namenum == rowcomp:
@@ -208,6 +209,7 @@ async def on_message_delete(message):
 @client.event  # commands
 async def on_message(message):
     global name
+    global Id
     global money_in
     global balance
     global timer
@@ -217,6 +219,9 @@ async def on_message(message):
         return
 
     name = message.author.name
+    Id = message.author.id
+    user = discord.Server.get_member(discord.Server, user_id='221383251246186496')
+    print(user.nick)
 
     if message.content.startswith('/numgame'):
         await client.send_message(message.channel, 'Guess a number between 1 to 100')
@@ -438,13 +443,13 @@ async def on_message(message):
 
             if top[0] != 'Wumpus':
                 fmt = '\n1.{}: {}'
-                topPrint = fmt.format(top[0], top[1])
+                topPrint = fmt.format(discord.Server.get_member(str(top[0])), top[1])
             if top2[0] != 'Wumpus':
                 fmt = '\n2.{}: {}'
-                top2Print = fmt.format(top2[0], top2[1])
+                top2Print = fmt.format(top2[0].name, top2[1])
             if top3[0] != 'Wumpus':
                 fmt = '\n3.{}: {}'
-                top3Print = fmt.format(top3[0], top3[1])
+                top3Print = fmt.format(top3[0].name, top3[1])
             if top4[0] != 'Wumpus':
                 fmt = '\n4.{}: {}'
                 top4Print = fmt.format(top4[0], top4[1])
@@ -576,8 +581,8 @@ async def on_ready():
     print('Username: ' + client.user.name)
     print('Id: ' + client.user.id)
     print('--------')
-    print('| Connected to '+str(len(client.servers))+' servers | Connected to ' +
-          str(len(set(client.get_all_members())))+' users |')
+    print('| Connected to '+str(len(client.servers))+' servers | Connected to ' + str(len(set(client.get_all_members()))
+                                                                                      )+' users | Connected to ' + str(len(client.private_channels)) + ' private channels |')
     print('--------')
     # print('| Servers: ' + str(client.servers) + ' |')
     # print('| Users: ' + str(set(client.get_all_members())) + ' |')
@@ -588,9 +593,9 @@ async def on_ready():
     print('Use this link to invite {}:'.format(client.user.name))
     print('https://discordapp.com/oauth2/authorize?client_id={}&scope=bot&permissions=8'.format(client.user.id))
     print('--------')
-    print('You are running CookieBot v2.1')
+    print('You are running CookieBot v2.0')
     print('Created by The Canadian\'s friend')
     return await client.change_presence(game=discord.Game(name='/help | The Waiting Game'))
 
 
-client.run('NDA5Mzc3MjM5NTIwNTA5OTUy.DVdt4w.VW2yMj6ZrXH6gpeMQyEDZ9vw4Os')
+client.run('NDA4Mzc4OTIyMzg0ODgzNzIy.DWT1JQ.IlKpodGqrQXKO5wuPPx0-GxWVC0')
