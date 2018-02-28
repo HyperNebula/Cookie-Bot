@@ -598,4 +598,4 @@ async def on_ready():
     return await client.change_presence(game=discord.Game(name='/help | The Waiting Game'))
 
 
-client.run('NDA4Mzc4OTIyMzg0ODgzNzIy.DWT1JQ.IlKpodGqrQXKO5wuPPx0-GxWVC0')
+client.run('YourTokenHere')
