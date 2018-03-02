@@ -547,26 +547,6 @@ async def on_message(message):
 
         await client.edit_message(tmp, 'You have sent {} messages.'.format(counter))
 
-    elif message.content.startswith('/reset'):
-        if message.author.name == 'The Canadian\'s Friend':
-            df = pd.read_csv(
-                'bot/_paydayCooldown.csv')
-            df.loc[df["Username"] == name, "Time"] = 0
-            df.to_csv(
-                'bot/_paydayCooldown.csv', index=False)
-            df = pd.read_csv(
-                'bot/_robCooldown.csv')
-            df.loc[df["Username"] == name, "Time"] = 0
-            df.to_csv(
-                'bot/_robCooldown.csv', index=False)
-            df = pd.read_csv(
-                'bot/_rouletteCooldown.csv')
-            df.loc[df["Username"] == name, "Time"] = 0
-            df.to_csv(
-                'bot/_rouletteCooldown.csv', index=False)
-        else:
-            await client.send_message(message.channel, 'For help and a list of commands, please use /help')
-
     elif message.content.startswith('/help'):
         await client.send_message(message.author, '```-----------Cookie-bot help-----------\n\nGame Commands:\n- numgame: Starts a number guessing game\n- rob: Try and steal some Cocoa Beans\n- srob: robs with 300 Cocoa Beans\n- payday: Recieve Cocoa Beans every 30 minutes\n- roulette: If you win, you double your Cocoa Beans\nCurrency Commands:\n- bank: Displays curent balance of bank account\n- bank register: Registers a bank account\n- top: Displays the users with the most amount of Cocoa Beans\nUtility Commands:\n- who: says who you are\n- count: Lists the number of users registered\n- messages: Lists the amount of messages you have sent\n\nCookie-bot made by The Canadian\'s Friend```')
 
