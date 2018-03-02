@@ -570,7 +570,7 @@ async def on_ready():
     print('Use this link to invite {}:'.format(client.user.name))
     print('https://discordapp.com/oauth2/authorize?client_id={}&scope=bot&permissions=8'.format(client.user.id))
     print('--------')
-    print('You are running CookieBot v2.1')
+    print('You are running CookieBot v2.2')
     print('Created by The Canadian\'s friend')
     return await client.change_presence(game=discord.Game(name='/help | The Waiting Game'))
 
