@@ -184,7 +184,7 @@ async def bal(x, message):
 
 
 # Edit/Delete messages
-channel = '408750927714058240'  # channel id for logs
+channel = 'Channel_Id'  # channel id for logs
 
 
 @client.event
@@ -437,23 +437,25 @@ async def on_message(message):
             top5Print = ''
 
             if top[0] != 'Wumpus':
-                fmt = '\n1.{}: {}'
+                fmt = '\n1.`{}`: {}'
                 topPrint = fmt.format(top[0], top[1])
             if top2[0] != 'Wumpus':
-                fmt = '\n2.{}: {}'
+                fmt = '\n2.`{}`: {}'
                 top2Print = fmt.format(top2[0], top2[1])
             if top3[0] != 'Wumpus':
-                fmt = '\n3.{}: {}'
+                fmt = '\n3.`{}`: {}'
                 top3Print = fmt.format(top3[0], top3[1])
             if top4[0] != 'Wumpus':
-                fmt = '\n4.{}: {}'
+                fmt = '\n4.`{}`: {}'
                 top4Print = fmt.format(top4[0], top4[1])
             if top5[0] != 'Wumpus':
-                fmt = '\n5.{}: {}'
+                fmt = '\n5.`{}`: {}'
                 top5Print = fmt.format(top5[0], top5[1])
 
-            fmt = '```Leaderboard:{}{}{}{}{}```'
-            await client.send_message(message.channel, fmt.format(topPrint, top2Print, top3Print, top4Print, top5Print))
+            fmt = '{}{}{}{}{}'
+            embed = discord.Embed(title="Leaderboard", colour=discord.Colour(
+                0x724ded), description=fmt.format(topPrint, top2Print, top3Print, top4Print, top5Print))
+            await client.send_message(message.channel, embed=embed)
 
     elif message.content.startswith('/roulette'):
 
@@ -570,7 +572,7 @@ async def on_ready():
     print('Use this link to invite {}:'.format(client.user.name))
     print('https://discordapp.com/oauth2/authorize?client_id={}&scope=bot&permissions=8'.format(client.user.id))
     print('--------')
-    print('You are running CookieBot v2.2')
+    print('You are running CookieBot v2.3')
     print('Created by The Canadian\'s friend')
     return await client.change_presence(game=discord.Game(name='/help | The Waiting Game'))
 
