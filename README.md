@@ -4,6 +4,6 @@ This is a money discord bot, made using python. In order to use it, you must hav
 
 You must also make a discord bot applictation on their website and replace "YourTokenHere" at the bottem of the python file with your bot token
 
-THIS IS THE PART OF THE BOT THAT I AM WORKING ON. IT MAY NOT WORK
+I AM NO LONGER WORKING ON THIS BRANCH. IT WILL NOT WORK
 
 [Download link](https://github.com/The-Canadians-Friend/Cookie-Bot/archive/master.zip)
