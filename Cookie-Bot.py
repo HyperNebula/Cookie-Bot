@@ -77,6 +77,7 @@ async def bal(x, message):
     global money_in
     global rowcomp
     global timer
+    global TargetUser
     with open('bot/_Bal.csv', 'r') as balc:
         balReader = csv.reader(balc)
         namenum = -1
@@ -179,6 +180,18 @@ async def bal(x, message):
                 elif namenum == rowcomp:
                     balance = 0
                     break
+            elif x == 8:
+                if line[0] == TargetUser:
+                    df = pd.read_csv(
+                        'bot/_Bal.csv')
+                    df.loc[df["Username"] == TargetUser, "Amount"] += money_in
+                    df.to_csv(
+                        'bot/_Bal.csv', index=False)
+                    break
+                elif namenum == rowcomp:
+                    await asyncio.sleep(0.1)
+                    await client.send_message(message.channel, 'That user does not exist or has not registered an account.')
+                    break
             else:
                 break
 
@@ -211,6 +224,7 @@ async def on_message(message):
     global money_in
     global balance
     global timer
+    global TargetUser
 
     # await asyncio.sleep(0.2)
     if message.author == client.user:
@@ -549,15 +563,15 @@ async def on_message(message):
             return m.content.isdigit()
 
         await client.send_message(message.channel, 'How much Cocoa Beans do you want to give?')
-        money_give = await client.wait_for_message(timeout=10.0, author=message.author, check=guess_check)
-        money_give = int(money_give.content)
+        money_in = await client.wait_for_message(timeout=10.0, author=message.author, check=guess_check)
+        money_in = int(money_in.content)
 
-        if money_give < 1:
+        if money_in < 1:
             await client.send_message(message.channel, 'The minimum amount of Cocoa Beans is 1')
             return
 
         await bal(7, message)
-        if balance < money_give:
+        if balance < money_in:
             await client.send_message(message.channel, 'You do not have enought Cocoa Beans. Use /bank to see your current balance')
             return
 
@@ -567,7 +581,9 @@ async def on_message(message):
         give_user = give_user.strip('<')
         give_user = give_user.strip('>')
         give_user = give_user.strip('@')
-        print(give_user)
+        TargetUser = give_user
+        await bal(8, message)
+        await bal(2, message)
 
     elif message.content.startswith('/help'):
         embed = discord.Embed(title="Cookie Bot Help", colour=discord.Colour(0xef41), description="This is a list of all the commands and their uses \n\n**Game Commands:**\n- `numgame:` Starts a number guessing game\n- `rob:` Try and steal some Cocoa Beans\n- `srob:` robs with 300 Cocoa Beans\n- `payday:` Recieve Cocoa Beans every 30 minutes\n- `roulette:` If you win, you double your Cocoa Beans\n\n**Currency Commands:**\n- `bank:` Displays curent balance of bank account\n- `bank register:` Registers a bank account\n- `top:` Displays the users with the most amount of Cocoa Beans\n\n**Utility Commands:**\n- `who:` says who you are\n- `count:` Lists the number of users registered\n- `messages:` Lists the amount of messages you have sent\n\nCookie-bot made by The Canadian's Friend")
