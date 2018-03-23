@@ -544,7 +544,7 @@ async def on_message(message):
 
         await client.edit_message(tmp, 'You have sent {} messages.'.format(counter))
 
-    elif message.content.startwith('/give'):
+    elif message.content.startswith('/give'):
         def guess_check(m):
             return m.content.isdigit()
 
@@ -552,17 +552,21 @@ async def on_message(message):
         money_give = await client.wait_for_message(timeout=10.0, author=message.author, check=guess_check)
         money_give = int(money_give.content)
 
-        if money_bet < 1:
+        if money_give < 1:
             await client.send_message(message.channel, 'The minimum amount of Cocoa Beans is 1')
             return
 
         await bal(7, message)
-        if balance < money_bet:
+        if balance < money_give:
             await client.send_message(message.channel, 'You do not have enought Cocoa Beans. Use /bank to see your current balance')
             return
 
         await client.send_message(message.channel, 'Who do you want to give the Cocoa Beans to?')
         give_user = await client.wait_for_message(timeout=10.0, author=message.author)
+        give_user = give_user.content
+        give_user = give_user.strip('<')
+        give_user = give_user.strip('>')
+        give_user = give_user.strip('@')
         print(give_user)
 
     elif message.content.startswith('/help'):
@@ -593,7 +597,7 @@ async def on_ready():
     print('Use this link to invite {}:'.format(client.user.name))
     print('https://discordapp.com/oauth2/authorize?client_id={}&scope=bot&permissions=8'.format(client.user.id))
     print('--------')
-    print('You are running CookieBot v2.3')
+    print('You are running CookieBot v2.4')
     print('Created by The Canadian\'s friend')
     return await client.change_presence(game=discord.Game(name='/help | The Waiting Game'))
 
