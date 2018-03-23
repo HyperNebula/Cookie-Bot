@@ -544,6 +544,27 @@ async def on_message(message):
 
         await client.edit_message(tmp, 'You have sent {} messages.'.format(counter))
 
+    elif message.content.startwith('/give'):
+        def guess_check(m):
+            return m.content.isdigit()
+
+        await client.send_message(message.channel, 'How much Cocoa Beans do you want to give?')
+        money_give = await client.wait_for_message(timeout=10.0, author=message.author, check=guess_check)
+        money_give = int(money_give.content)
+
+        if money_bet < 1:
+            await client.send_message(message.channel, 'The minimum amount of Cocoa Beans is 1')
+            return
+
+        await bal(7, message)
+        if balance < money_bet:
+            await client.send_message(message.channel, 'You do not have enought Cocoa Beans. Use /bank to see your current balance')
+            return
+
+        await client.send_message(message.channel, 'Who do you want to give the Cocoa Beans to?')
+        give_user = await client.wait_for_message(timeout=10.0, author=message.author)
+        print(give_user)
+
     elif message.content.startswith('/help'):
         embed = discord.Embed(title="Cookie Bot Help", colour=discord.Colour(0xef41), description="This is a list of all the commands and their uses \n\n**Game Commands:**\n- `numgame:` Starts a number guessing game\n- `rob:` Try and steal some Cocoa Beans\n- `srob:` robs with 300 Cocoa Beans\n- `payday:` Recieve Cocoa Beans every 30 minutes\n- `roulette:` If you win, you double your Cocoa Beans\n\n**Currency Commands:**\n- `bank:` Displays curent balance of bank account\n- `bank register:` Registers a bank account\n- `top:` Displays the users with the most amount of Cocoa Beans\n\n**Utility Commands:**\n- `who:` says who you are\n- `count:` Lists the number of users registered\n- `messages:` Lists the amount of messages you have sent\n\nCookie-bot made by The Canadian's Friend")
 
