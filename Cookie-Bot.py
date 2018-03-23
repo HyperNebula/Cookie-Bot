@@ -584,7 +584,8 @@ async def on_message(message):
         give_user = give_user.strip('<')
         give_user = give_user.strip('>')
         give_user = give_user.strip('@')
-        TargetUser = give_user
+        TargetUser = client.get_member(give_user)
+        TargetUser = TargetUser.name
         await bal(8, message)
         if TorF:
             await bal(3, message)
