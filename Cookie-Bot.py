@@ -78,6 +78,7 @@ async def bal(x, message):
     global rowcomp
     global timer
     global TargetUser
+    global TorF
     with open('bot/_Bal.csv', 'r') as balc:
         balReader = csv.reader(balc)
         namenum = -1
@@ -182,6 +183,7 @@ async def bal(x, message):
                     break
             elif x == 8:
                 if line[0] == TargetUser:
+                    TorF = True
                     df = pd.read_csv(
                         'bot/_Bal.csv')
                     df.loc[df["Username"] == TargetUser, "Amount"] += money_in
@@ -189,6 +191,7 @@ async def bal(x, message):
                         'bot/_Bal.csv', index=False)
                     break
                 elif namenum == rowcomp:
+                    TorF = False
                     await asyncio.sleep(0.1)
                     await client.send_message(message.channel, 'That user does not exist or has not registered an account.')
                     break
@@ -583,7 +586,8 @@ async def on_message(message):
         give_user = give_user.strip('@')
         TargetUser = give_user
         await bal(8, message)
-        await bal(2, message)
+        if TorF:
+            await bal(3, message)
 
     elif message.content.startswith('/help'):
         embed = discord.Embed(title="Cookie Bot Help", colour=discord.Colour(0xef41), description="This is a list of all the commands and their uses \n\n**Game Commands:**\n- `numgame:` Starts a number guessing game\n- `rob:` Try and steal some Cocoa Beans\n- `srob:` robs with 300 Cocoa Beans\n- `payday:` Recieve Cocoa Beans every 30 minutes\n- `roulette:` If you win, you double your Cocoa Beans\n\n**Currency Commands:**\n- `bank:` Displays curent balance of bank account\n- `bank register:` Registers a bank account\n- `top:` Displays the users with the most amount of Cocoa Beans\n\n**Utility Commands:**\n- `who:` says who you are\n- `count:` Lists the number of users registered\n- `messages:` Lists the amount of messages you have sent\n\nCookie-bot made by The Canadian's Friend")
