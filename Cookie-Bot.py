@@ -11,6 +11,7 @@ import pandas as pd
 
 
 client = discord.Client()
+# server = discord.Server()
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
 handler = logging.FileHandler(filename='bot/discord.log', encoding='utf-8', mode='w')
@@ -584,7 +585,7 @@ async def on_message(message):
         give_user = give_user.strip('<')
         give_user = give_user.strip('>')
         give_user = give_user.strip('@')
-        TargetUser = client.get_member(give_user)
+        TargetUser = server.get_member(give_user)
         TargetUser = TargetUser.name
         await bal(8, message)
         if TorF:
@@ -620,6 +621,8 @@ async def on_ready():
     print('--------')
     print('You are running CookieBot v2.4')
     print('Created by The Canadian\'s friend')
+    # print(server)
+    print(client.servers)
     return await client.change_presence(game=discord.Game(name='/help | The Waiting Game'))
 
 
