@@ -11,7 +11,6 @@ import pandas as pd
 
 
 client = discord.Client()
-server = discord.Server()
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
 handler = logging.FileHandler(filename='bot/discord.log', encoding='utf-8', mode='w')
