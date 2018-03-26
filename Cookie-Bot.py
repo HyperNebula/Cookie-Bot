@@ -11,7 +11,7 @@ import pandas as pd
 
 
 client = discord.Client()
-# server = discord.Server()
+server = discord.Server()
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
 handler = logging.FileHandler(filename='bot/discord.log', encoding='utf-8', mode='w')
@@ -194,7 +194,8 @@ async def bal(x, message):
                 elif namenum == rowcomp:
                     TorF = False
                     await asyncio.sleep(0.1)
-                    await client.send_message(message.channel, 'That user does not exist or has not registered an account.')
+                    fmt = 'The user `{}` does not exist or has not registered an account.'
+                    await client.send_message(message.channel, fmt.format(TargetUser))
                     break
             else:
                 break
@@ -581,12 +582,7 @@ async def on_message(message):
 
         await client.send_message(message.channel, 'Who do you want to give the Cocoa Beans to?')
         give_user = await client.wait_for_message(timeout=10.0, author=message.author)
-        give_user = give_user.content
-        give_user = give_user.strip('<')
-        give_user = give_user.strip('>')
-        give_user = give_user.strip('@')
-        TargetUser = server.get_member(give_user)
-        TargetUser = TargetUser.name
+        TargetUser = give_user.content
         await bal(8, message)
         if TorF:
             await bal(3, message)
@@ -621,8 +617,6 @@ async def on_ready():
     print('--------')
     print('You are running CookieBot v2.4')
     print('Created by The Canadian\'s friend')
-    # print(server)
-    print(client.servers)
     return await client.change_presence(game=discord.Game(name='/help | The Waiting Game'))
 
 
