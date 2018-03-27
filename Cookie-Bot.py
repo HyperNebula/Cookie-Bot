@@ -568,6 +568,9 @@ async def on_message(message):
 
         await client.send_message(message.channel, 'How much Cocoa Beans do you want to give?')
         money_in = await client.wait_for_message(timeout=10.0, author=message.author, check=guess_check)
+        if money_in is None:
+            await client.send_message(message.channel, 'Sorry, you took too long.')
+            return
         money_in = int(money_in.content)
 
         if money_in < 1:
@@ -581,6 +584,10 @@ async def on_message(message):
 
         await client.send_message(message.channel, 'Who do you want to give the Cocoa Beans to?')
         give_user = await client.wait_for_message(timeout=10.0, author=message.author)
+        if money_in is None:
+            await client.send_message(message.channel, 'Sorry, you took too long.')
+            return
+
         TargetUser = give_user.content
         await bal(8, message)
         if TorF:
