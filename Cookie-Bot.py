@@ -229,6 +229,7 @@ async def on_message(message):
     global balance
     global timer
     global TargetUser
+    global TorF
 
     # await asyncio.sleep(0.2)
     if message.author == client.user:
@@ -584,7 +585,7 @@ async def on_message(message):
 
         await client.send_message(message.channel, 'Who do you want to give the Cocoa Beans to?')
         give_user = await client.wait_for_message(timeout=10.0, author=message.author)
-        if money_in is None:
+        if give_user is None:
             await client.send_message(message.channel, 'Sorry, you took too long.')
             return
 
