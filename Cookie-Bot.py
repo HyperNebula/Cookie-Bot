@@ -613,8 +613,8 @@ async def on_ready():
     print('| Connected to '+str(len(client.servers))+' servers | Connected to ' +
           str(len(set(client.get_all_members())))+' users |')
     print('--------')
-    # print('| Servers: ' + str(bot.servers) + ' |')
-    # print('| Users: ' + str(set(bot.get_all_members())) + ' |')
+    # print('| Servers: ' + str(client.servers) + ' |')
+    # print('| Users: ' + str(set(client.get_all_members())) + ' |')
     # print('--------')
     print('Current Discord.py Version: {} | Current Python Version: {}'.format(
         discord.__version__, platform.python_version()))
