@@ -33,9 +33,25 @@ async def bank(ctx, regi: str = None):
 
 
 @bot.command(pass_context=True)
+async def top(ctx):
+    leadboard = account.top()
+    name1 = await bot.get_user_info(leadboard[0][0])
+    name2 = await bot.get_user_info(leadboard[1][0])
+    name3 = await bot.get_user_info(leadboard[2][0])
+    name4 = await bot.get_user_info(leadboard[3][0])
+    name5 = await bot.get_user_info(leadboard[4][0])
+
+    fmt = '1.`{0.display_name}`: {1}2.`{2.display_name}`: {3}3.`{4.display_name}`: {5}4.`{6.display_name}`: {7}5.`{8.display_name}`: {9}'
+    board = fmt.format(name1, leadboard[0][1], name2, leadboard[1][1], name3, leadboard[2][1], name4, leadboard[3][1], name5, leadboard[4][1])
+
+    embed = discord.Embed(title="Leaderboard", colour=discord.Colour(0x724ded), description=board)
+    await bot.send_message(ctx.message.channel, embed=embed)
+
+
+@bot.command(pass_context=True)
 async def help(ctx):
 
-    embed = discord.Embed(title="Cookie Bot Help", colour=discord.Colour(0xef41), description="This is a list of all the commands and their uses \n\n**Game Commands:**\n- `numgame:` Starts a number guessing game\n- `rob:` Try and steal some Cocoa Beans\n- `srob:` robs with 300 Cocoa Beans\n- `payday:` Recieve Cocoa Beans every 30 minutes\n- `roulette:` If you win, you double your Cocoa Beans\n\n**Currency Commands:**\n- `bank:` Displays curent balance of bank account\n- `bank register:` Registers a bank account\n- `top:` Displays the users with the most amount of Cocoa Beans\n- `give:` Allows you to give money to registered users\n\n**Utility Commands:**\n- `who:` says who you are\n- `count:` Lists the number of users registered\n- `messages:` Lists the amount of messages you have sent\n\nCookie-bot made by The Nexus")
+    embed = discord.Embed(title="Cookie Bot Help", colour=discord.Colour(0xef41), description="This is a list of all the commands and their uses \n\n**Game Commands:**\n- `numgame:` Starts a number guessing game\n- `rob:` Try and steal some Cocoa Beans\n- `srob:` robs with 300 Cocoa Beans\n- `payday:` Recieve Cocoa Beans every 30 minutes\n- `roulette:` If you win, you double your Cocoa Beans\n\n**Currency Commands:**\n- `bank:` Displays curent balance of bank account\n- `bank register:` Registers a bank account\n- `bank @USERNAME:` check the balance of anyone that you @mention\n- `top:` Displays the users with the most amount of Cocoa Beans\n- `give:` Allows you to give money to registered users\n\n**Utility Commands:**\n- `who:` says who you are\n- `count:` Lists the number of users registered\n- `messages:` Lists the amount of messages you have sent\n\nCookie-bot made by The Nexus")
 
     await bot.send_message(ctx.message.author, embed=embed)
 
@@ -59,4 +75,4 @@ async def on_ready():
     return await bot.change_presence(game=discord.Game(name='/help | The Waiting Game'))
 
 
-bot.run('bot_id')
+bot.run('YourTokenHere')
