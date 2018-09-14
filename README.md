@@ -6,4 +6,6 @@ This is a money discord bot, made using python. In order to use it, you must hav
 
 You must also make a discord bot application on the discord website and replace ***YourTokenHere*** at the bottom of the **CookieBot.py** file with your bot token. You will also need to get the user id of your bot and replace ***bot_id*** at the top of the **accounts.py file**
 
+If you want to use the last working version, use this: [Version 2.5](https://github.com/The-Canadians-Friend/Cookie-Bot/releases/tag/v2.5)
+
 [Download link](https://github.com/The-Canadians-Friend/Cookie-Bot/archive/master.zip)
