@@ -151,3 +151,44 @@ def payday(name):
                 df.loc[df["UserId"] == int(name), "Payday"] = time.time()
                 df.to_csv('accounts.csv', index=False)
     return 'Payday! You just got 1000 Cocoa Beans!'
+
+
+def numgame(name, guess, guessnum, answer):
+    if guess == answer:
+        if guessnum == 1:
+            money_in = 1000
+        if guessnum == 2:
+            money_in = 500
+        if guessnum == 3:
+            money_in = 300
+        if guessnum == 4:
+            money_in = 200
+        if guessnum == 5:
+            money_in = 150
+        if guessnum == 6:
+            money_in = 100
+
+        fmt = "You are right! You guessed it in {} guesses. As a reward, you get {} Cocoa Beans"
+
+        with open('accounts.csv', 'r') as moneyl:
+            balReader = csv.reader(moneyl)
+            namenum = -1
+
+            for line in balReader:
+                namenum += 1
+                if line[0] == name:
+                    df = pd.read_csv('accounts.csv')
+                    df.loc[df["UserId"] == int(name), "Balance"] += money_in
+                    df.to_csv('accounts.csv', index=False)
+
+        return fmt.format(guessnum, money_in)
+
+    elif guessnum != 6:
+        if guess < answer:
+            return 'The number is higher'
+        if guess > answer:
+            return 'The number is lower'
+
+    if guessnum == 6 and guess != answer:
+            fmt = 'You did not guess the number in time. It was {}'
+            return fmt.format(answer)

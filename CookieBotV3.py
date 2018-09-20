@@ -9,15 +9,19 @@ from discord.ext import commands
 from discord.ext.commands import Bot
 
 
-bot = commands.Bot(command_prefix='/')
+bot = commands.Bot(command_prefix=commands.when_mentioned_or('/'))
 bot.remove_command("help")
 
 
 @bot.command(pass_context=True)
 async def bank(ctx, regi: str = None):
     if regi is None:
-        await bot.say("Your balance is {}".format(account.bal(ctx.message.author.id)))
-        return
+        if account.bal(ctx.message.author.id) == "Please register first using `/bank register`":
+            await bot.say("Please register first using `/bank register`")
+            return
+        else:
+            await bot.say("Your balance is {}".format(account.bal(ctx.message.author.id)))
+            return
     elif regi == "register":
         await bot.say(account.register(ctx.message.author.id))
         return
@@ -56,6 +60,29 @@ async def pay(ctx, user: str, amount: int):
 @bot.command(pass_context=True)
 async def payday(ctx):
     await bot.say(account.payday(ctx.message.author.id))
+
+
+@bot.command(pass_context=True)
+async def numgame(ctx):
+    await bot.say('Guess a number between 1 to 100')
+
+    answer = random.randint(1, 100)
+    guessnumber = 0
+
+    def guess_check(m):
+        return m.content.isdigit()
+    while guessnumber < 6:
+        guess = await bot.wait_for_message(timeout=10.0, author=ctx.message.author, check=guess_check)
+        guessnumber = guessnumber + 1
+
+        if guess is None:
+            fmt = 'Sorry, you took too long. It was {}.'
+            await bot.say(fmt.format(answer))
+            break
+        await bot.say(account.numgame(ctx.message.author.id, int(guess.content), guessnumber, answer))
+
+        if guess == answer:
+            break
 
 
 @bot.command(pass_context=True)
