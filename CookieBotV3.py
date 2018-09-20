@@ -80,9 +80,9 @@ async def on_ready():
     print(f'Use this link to invite {bot.user.name}:')
     print(f'https://discordapp.com/oauth2/authorize?client_id={bot.user.id}&scope=bot&permissions=8')
     print('--------')
-    print('You are running CookieBot v3.0 Beta')
+    print('You are running CookieBot v3.1 Beta')
     print('Created by The Nexus')
     return await bot.change_presence(game=discord.Game(name='/help | The Waiting Game'))
 
 
-bot.run('NDA4Mzc4OTIyMzg0ODgzNzIy.DoRWhQ.ktTmx0pSngo1mfdR3diV7fSfeHg')
+bot.run('YourBotToken')
