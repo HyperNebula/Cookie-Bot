@@ -1,9 +1,10 @@
 import csv
 import time
+import random
 import pandas as pd
 
 
-bot_id = "408378922384883722"
+bot_id = "bot_id"
 
 
 def count():
@@ -30,7 +31,7 @@ def register(name):
             elif namenum == count():
                 with open("accounts.csv", "a", newline='') as acnts:
                     acntWriter = csv.writer(acnts)
-                    acntWriter.writerow([name,0,0])
+                    acntWriter.writerow([name, 0, 0, 0])
                     return "Bank Registered"
 
 
@@ -158,28 +159,21 @@ def numgame(name, guess, guessnum, answer):
         if guessnum == 1:
             money_in = 1000
         if guessnum == 2:
-            money_in = 500
+            money_in = 900
         if guessnum == 3:
-            money_in = 300
+            money_in = 750
         if guessnum == 4:
-            money_in = 200
+            money_in = 600
         if guessnum == 5:
-            money_in = 150
+            money_in = 450
         if guessnum == 6:
-            money_in = 100
+            money_in = 300
 
         fmt = "You are right! You guessed it in {} guesses. As a reward, you get {} Cocoa Beans"
 
-        with open('accounts.csv', 'r') as moneyl:
-            balReader = csv.reader(moneyl)
-            namenum = -1
-
-            for line in balReader:
-                namenum += 1
-                if line[0] == name:
-                    df = pd.read_csv('accounts.csv')
-                    df.loc[df["UserId"] == int(name), "Balance"] += money_in
-                    df.to_csv('accounts.csv', index=False)
+        df = pd.read_csv('accounts.csv')
+        df.loc[df["UserId"] == int(name), "Balance"] += money_in
+        df.to_csv('accounts.csv', index=False)
 
         return fmt.format(guessnum, money_in)
 
@@ -192,3 +186,58 @@ def numgame(name, guess, guessnum, answer):
     if guessnum == 6 and guess != answer:
             fmt = 'You did not guess the number in time. It was {}'
             return fmt.format(answer)
+
+
+def rob(name, ramount):
+    name = str(name)
+    with open("accounts.csv", "r") as acntl:
+        coolReader = csv.reader(acntl)
+        namenum = -1
+
+        for row in coolReader:
+            namenum += 1
+            if row[0] == name:
+                timer = float(row[3])
+                timer = int(timer)
+                balrob = int(row[1])
+            elif namenum == count():
+                return "Please register first using `/bank register`"
+
+    timeleft = int(time.time()-timer)
+    timeleft = 60 - timeleft
+    if timeleft > 0:
+        fmt = 'You still have to wait {} seconds!'
+        return fmt.format(timeleft)
+
+    if ramount > 300:
+        return 'The maximum amount of Cocoa Beans is 300'
+    elif ramount < 1:
+        return 'The minimum amount of Cocoa Beans is 1'
+    elif balrob < ramount:
+        return 'You do not have enought Cocoa Beans. Use /bank to see your current balance'
+    else:
+        if ramount > 249:
+            chance = 65
+        elif ramount > 200:
+            chance = 60
+        elif ramount > 149:
+            chance = 55
+        elif ramount > 100:
+            chance = 50
+        elif ramount > 0:
+            chance = 45
+
+    chancenum = random.randint(0, 100)
+    if chancenum <= chance:
+        df = pd.read_csv('accounts.csv')
+        df.loc[df["UserId"] == int(name), "Balance"] += ramount
+        df.loc[df["UserId"] == int(name), "Rob"] = time.time()
+        df.to_csv('accounts.csv', index=False)
+        return 'Congrats!, you doubled your {} Cocoa Beans'.format(ramount)
+    else:
+        df = pd.read_csv('accounts.csv')
+        df.loc[df["UserId"] == int(name), "Balance"] -= ramount
+        df.loc[df["UserId"] == int(name), "Rob"] = time.time()
+        df.to_csv('accounts.csv', index=False)
+        return 'Sorry, you got caught. You lost {} Cocoa Beans'.format(ramount)
+

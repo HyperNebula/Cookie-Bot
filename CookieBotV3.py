@@ -1,12 +1,9 @@
-import time
 import random
 import asyncio
 import account
 import discord
-import datetime
 import platform
 from discord.ext import commands
-from discord.ext.commands import Bot
 
 
 bot = commands.Bot(command_prefix=commands.when_mentioned_or('/'))
@@ -20,7 +17,8 @@ async def bank(ctx, regi: str = None):
             await bot.say("Please register first using `/bank register`")
             return
         else:
-            await bot.say("Your balance is {}".format(account.bal(ctx.message.author.id)))
+            embed = discord.Embed(title="Bank Account info:", colour=discord.Colour(0xf5a623), description="Your balance is: `{}`".format(account.bal(ctx.message.author.id)))
+            await bot.say(embed=embed)
             return
     elif regi == "register":
         await bot.say(account.register(ctx.message.author.id))
@@ -33,8 +31,8 @@ async def bank(ctx, regi: str = None):
         return
 
 
-@bot.command(pass_context=True)
-async def top(ctx):
+@bot.command()
+async def top():
     leadboard = account.top()
     name1 = await bot.get_user_info(leadboard[0][0])
     name2 = await bot.get_user_info(leadboard[1][0])
@@ -46,7 +44,7 @@ async def top(ctx):
     board = fmt.format(name1, leadboard[0][1] + '\n', name2, leadboard[1][1] + '\n', name3, leadboard[2][1] + '\n', name4, leadboard[3][1] + '\n', name5, leadboard[4][1])
 
     embed = discord.Embed(title="Leaderboard", colour=discord.Colour(0x724ded), description=board)
-    await bot.send_message(ctx.message.channel, embed=embed)
+    await bot.say(embed=embed)
 
 
 @bot.command(pass_context=True)
@@ -64,6 +62,10 @@ async def payday(ctx):
 
 @bot.command(pass_context=True)
 async def numgame(ctx):
+    if account.bal(ctx.message.author.id) == "Please register first using `/bank register`":
+        await bot.say("Please register first using `/bank register`")
+        return
+
     await bot.say('Guess a number between 1 to 100')
 
     answer = random.randint(1, 100)
@@ -81,14 +83,18 @@ async def numgame(ctx):
             break
         await bot.say(account.numgame(ctx.message.author.id, int(guess.content), guessnumber, answer))
 
-        if guess == answer:
+        if int(guess.content) == answer:
             break
 
 
 @bot.command(pass_context=True)
-async def help(ctx):
+async def rob(ctx, ramount: int):
+    await bot.say(account.rob(ctx.message.author.id, ramount))
 
-    embed = discord.Embed(title="Cookie Bot Help", colour=discord.Colour(0xef41), description="This is a list of all the commands and their uses \n\n**Game Commands:**\n- `numgame:` Starts a number guessing game\n- `rob:` Try and steal some Cocoa Beans\n- `srob:` robs with 300 Cocoa Beans\n- `payday:` Recieve Cocoa Beans every 30 minutes\n- `roulette:` If you win, you double your Cocoa Beans\n\n**Currency Commands:**\n- `top:` Displays the users with the most amount of Cocoa Beans\n- `bank:` Displays curent balance of bank account\n- `bank register:` Registers a bank account\n- `bank @USERNAME:` check the balance of anyone that you @mention\n- `pay @USERNAME AMOUNT:` Allows you to give money to users that you @mention\n\n**Utility Commands:**\n- `who:` says who you are\n- `count:` Lists the number of users registered\n- `messages:` Lists the amount of messages you have sent\n\nCookie-bot made by The Nexus\nVersion: 3.0 Beta")
+
+@bot.command(pass_context=True)
+async def help(ctx):
+    embed = discord.Embed(title="Cookie Bot Help", colour=discord.Colour(0xef41), description="This is a list of all the commands and their uses \n\n**Game Commands:**\n- `rob:` Try and steal some Cocoa Beans\n- `srob:` robs with 300 Cocoa Beans\n- `payday:` Recieve Cocoa Beans every 30 minutes\n- `numgame:` Starts a number guessing game\n- `roulette:` If you win, you double your Cocoa Beans\n\n**Currency Commands:**\n- `top:` Displays the users with the most amount of Cocoa Beans\n- `bank:` Displays curent balance of bank account\n- `bank register:` Registers a bank account\n- `bank @USERNAME:` check the balance of anyone that you @mention\n- `pay @USERNAME AMOUNT:` Allows you to give money to users that you @mention\n\n**Utility Commands:**\n- `who:` says who you are\n- `count:` Lists the number of users registered\n- `messages:` Lists the amount of messages you have sent\n\nCookie-bot made by The Nexus\nVersion: 3.1 Beta")
 
     await bot.send_message(ctx.message.author, embed=embed)
 
