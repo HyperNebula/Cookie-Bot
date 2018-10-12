@@ -1,6 +1,7 @@
 import csv
 import time
 import random
+import wikipedia
 import pandas as pd
 
 
@@ -241,3 +242,7 @@ def rob(name, ramount):
         df.to_csv('accounts.csv', index=False)
         return 'Sorry, you got caught. You lost {} Cocoa Beans'.format(ramount)
 
+
+def definition(word):
+    wp = wikipedia.summary(word, sentences=2)
+    return wp
