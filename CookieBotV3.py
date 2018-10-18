@@ -117,6 +117,9 @@ async def on_ready():
     print('--------')
     print(
         f'| Connected to {str(len(bot.servers))} servers | Connected to {str(len(set(bot.get_all_members())))} users |')
+    print('Servers include:')
+    for item in bot.servers:
+        print('- {}'.format(item.name))
     print('--------')
     print(f'Current Discord.py Version: {discord.__version__} | Current Python Version: {platform.python_version()}')
     print('--------')
