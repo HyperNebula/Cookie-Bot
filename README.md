@@ -1,9 +1,5 @@
-# How to use the Discord Cookie-Bot
+# I AM NO LONGER WORKING ON THIS BRANCH. IT WILL NOT WORK
 
-This is a money discord bot, made using python. In order to use it, you must have **python3.6** or higher installed, and the python modules **discord.py** and **pandas**. In order to run it, make sure that all the files are in the same location, and then run the python file. As long as the file is open, the bot will run.
+In this branch, I attemped to us user's ids instead of usernames, so that if they changed their username, they would still have all of their data. This failed, but I was able to get it working in versions 3.0 and up
 
-You must also make a discord bot applictation on their website and replace "YourTokenHere" at the bottem of the python file with your bot token
-
-I AM NO LONGER WORKING ON THIS BRANCH. IT WILL NOT WORK
-
-[Download link](https://github.com/The-Canadians-Friend/Cookie-Bot/archive/master.zip)
+[Download link](https://github.com/The-Canadians-Friend/Cookie-Bot/archive/The-Dead-Branch.zip)
