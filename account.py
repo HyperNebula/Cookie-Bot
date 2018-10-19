@@ -3,7 +3,9 @@ import time
 import random
 import wikipedia
 import pandas as pd
-from varibles import *
+
+
+bot_id = "bot_id"
 
 
 def count():
