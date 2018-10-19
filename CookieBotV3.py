@@ -4,9 +4,10 @@ import account
 import discord
 import platform
 from discord.ext import commands
+from varibles import *
 
 
-bot = commands.Bot(command_prefix=commands.when_mentioned_or('/'))
+bot = commands.Bot(command_prefix=commands.when_mentioned_or(prefix))
 bot.remove_command("help")
 
 
@@ -131,4 +132,4 @@ async def on_ready():
     return await bot.change_presence(game=discord.Game(name='/help | The Waiting Game'))
 
 
-bot.run('YourBotToken')
+bot.run(YourBotToken)
