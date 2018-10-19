@@ -2,9 +2,9 @@
 
 # This is a beta version of the bot. It may not work!
 
-This is a money discord bot, made using python. In order to use it, you must have **python3.6** or higher installed, and the python modules **discord.py** and **pandas**. In order to run it, make sure that all the files are in the same location, and then run the python file. As long as the file is open, the bot will run.
+This is a money discord bot, made using python. In order to use it, you must have **python3.6** or higher installed, and the python modules **discord.py** and **pandas**. If you want the *definition* command to work, you will need the **Wikipedia** module installed. If you don't have it, the bot will still work, the command will just no work. In order to run the bot, make sure that all the files are in the same location, and then run the python file ***CookieBotV3.py***. As long as the file is open, the bot will run.
 
-I have added a python script to simplify adding the Bot token and id. To add them, just run **setup.py** and fill in the information when asked. There is also the option to add a custom prefix. If you do not supply one, the default prefix is **"/"**
+I have added a python script to simplify adding the Bot token and id. To add them, just run ***setup.py*** and fill in the information when asked. There is also the option to add a custom prefix. If you do not supply one, the default prefix is **"/"**
 
 ### NOTE: As of right now, python 3.7 does not work with the bot. Please use python 3.6
 
