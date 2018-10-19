@@ -10,4 +10,4 @@ I have added a python script to simplify adding the Bot token and id. To add the
 
 If you want to use the last working version, use this: [Version 2.5](https://github.com/The-Canadians-Friend/Cookie-Bot/releases/tag/v2.5)
 
-[Download link](https://github.com/The-Canadians-Friend/Cookie-Bot/archive/master.zip)
+[Current version download link](https://github.com/The-Canadians-Friend/Cookie-Bot/archive/master.zip)
