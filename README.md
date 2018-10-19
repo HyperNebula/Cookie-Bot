@@ -6,7 +6,7 @@ This is a money discord bot, made using python. In order to use it, you must hav
 
 I have added a python script to simplify adding the Bot token and id. To add them, just run **setup.py** and fill in the information when asked. There is also the option to add a custom prefix. If you do not supply one, the default prefix is **"/"**
 
-## NOTE: As of right now, python 3.7 does not work with the bot. Please use python 3.6
+### NOTE: As of right now, python 3.7 does not work with the bot. Please use python 3.6
 
 If you want to use the last working version, use this: [Version 2.5](https://github.com/The-Canadians-Friend/Cookie-Bot/releases/tag/v2.5)
 
