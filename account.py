@@ -2,9 +2,13 @@ import csv
 import time
 import random
 import pandas as pd
-
-
-bot_id = "bot_id"
+from varibles import *
+try:
+    import wikipedia
+except ImportError:
+    WikiWork = False
+else:
+    WikiWork = True
 
 
 def count():
@@ -241,3 +245,10 @@ def rob(name, ramount):
         df.to_csv('accounts.csv', index=False)
         return 'Sorry, you got caught. You lost {} Cocoa Beans'.format(ramount)
 
+
+def definition(word):
+    if WikiWork:
+        wp = wikipedia.summary(word, sentences=2)
+        return wp
+    else:
+        return 'The bot owner has not installed the Wikipedia package.'
