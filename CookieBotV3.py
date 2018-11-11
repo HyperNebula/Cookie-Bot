@@ -118,17 +118,22 @@ async def on_ready():
     print('--------')
     print(
         f'| Connected to {str(len(bot.servers))} servers | Connected to {str(len(set(bot.get_all_members())))} users |')
-    print('Servers include:')
+    print(' Servers include:')
     for item in bot.servers:
-        print('- {}'.format(item.name))
+        print('  - {}'.format(item.name))
     print('--------')
     print(f'Current Discord.py Version: {discord.__version__} | Current Python Version: {platform.python_version()}')
     print('--------')
     print(f'Use this link to invite {bot.user.name}:')
     print(f'https://discordapp.com/oauth2/authorize?client_id={bot.user.id}&scope=bot&permissions=8')
     print('--------')
-    print('You are running CookieBot v3.1 Beta')
+<<<<<<< HEAD
+    print('You are running CookieBot v3.2 Beta')
     print('Created by The Nexus')
+=======
+    print('You are running CookieBot v3.0 Beta.2')
+    print('Created by HyperNebula')
+>>>>>>> c5f75de3b019d63cf37a3e58aad679f11b1a037a
     return await bot.change_presence(game=discord.Game(name='/help | The Waiting Game'))
 
 
