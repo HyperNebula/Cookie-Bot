@@ -49,8 +49,14 @@ async def top():
 
 
 @bot.command(pass_context=True)
-async def pay(ctx, user: str, amount: int):
-    if user.startswith("<@!"):
+async def pay(ctx, user: str = None, amount: int = None):
+    if user is None:
+        await bot.say("Please specify the target user using this format: `/pay @USERNAME AMOUNT`")
+        return
+    elif amount is None:
+        await bot.say("Please specify the payment amount using this format: `/pay @USERNAME AMOUNT`")
+        return
+    elif user.startswith("<@!"):
         await bot.say("That user is a bot and cannot have an account")
         return
     await bot.say(account.pay(ctx.message.author.id, user.strip("<@>"), amount))
@@ -89,8 +95,12 @@ async def numgame(ctx):
 
 
 @bot.command(pass_context=True)
-async def rob(ctx, ramount: int):
-    await bot.say(account.rob(ctx.message.author.id, ramount))
+async def rob(ctx, ramount: int = None):
+    if ramount is None:
+        await bot.say("Please supply the amount you are robbing with using this format: `/rob AMOUNT`")
+        return
+    else:
+        await bot.say(account.rob(ctx.message.author.id, ramount))
 
 
 @bot.command(pass_context=True)
@@ -99,8 +109,12 @@ async def srob(ctx):
 
 
 @bot.command()
-async def definition(*, word: str):
-    await bot.say(account.definition(word))
+async def definition(*, word: str = None):
+    if word is None:
+        await bot.say("Please supply the word you are defining with using this format: `/definition WORD`")
+        return
+    else:
+        await bot.say(account.definition(word))
 
 
 @bot.command(pass_context=True)
