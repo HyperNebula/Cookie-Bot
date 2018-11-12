@@ -8,6 +8,6 @@ I have added a python script to simplify adding the Bot token and id. To add the
 
 ### NOTE: As of right now, python 3.7 does not work with the bot. Please use python 3.6
 
-If you want to use the last working version, use this: [Version 2.5](https://github.com/The-Canadians-Friend/Cookie-Bot/releases/tag/v2.5)
+If you want to use the last working version, use this: [Version 2.5](https://github.com/HyperNebula/Cookie-Bot/archive/v2.5.zip)
 
 [Current Version Download Link](https://github.com/The-Canadians-Friend/Cookie-Bot/archive/master.zip)
