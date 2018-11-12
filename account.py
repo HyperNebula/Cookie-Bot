@@ -248,7 +248,12 @@ def rob(name, ramount):
 
 def definition(word):
     if WikiWork:
-        wp = wikipedia.summary(word, sentences=2)
-        return wp
+        if word is None:
+            return "Please supply the word you are defining with using this format: `/definition WORD`"
+        try:
+            wp = wikipedia.summary(word, sentences=2)
+            return wp
+        except wikipedia.DisambiguationError:
+            return "Please be more specific. That word is too ambiguous"
     else:
         return 'The bot owner has not installed the Wikipedia package.'
