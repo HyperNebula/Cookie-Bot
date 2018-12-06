@@ -11,6 +11,9 @@ bot_id = input(' ')
 print('What do you want the command prefix to be?')
 prefix = input(' ')
 
+if prefix == '':
+    prefix = "/"
+
 fmt1 = 'YourBotToken = \'{}\'\n'
 fmt2 = 'bot_it = \'{}\'\n'
 fmt3 = 'prefix = \'{}\'\n'
