@@ -1,3 +1,3 @@
 YourBotToken = 'asd'
-bot_it = 'asd'
+bot_id = 'asd'
 prefix = '/'
