@@ -15,7 +15,7 @@ if prefix == '':
     prefix = "/"
 
 fmt1 = 'YourBotToken = \'{}\'\n'
-fmt2 = 'bot_it = \'{}\'\n'
+fmt2 = 'bot_id = \'{}\'\n'
 fmt3 = 'prefix = \'{}\'\n'
 
 lines = [fmt1.format(token), fmt2.format(bot_id), fmt3.format(prefix)]
