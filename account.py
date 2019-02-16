@@ -12,61 +12,29 @@ else:
 
 
 def count():
-    with open('accounts.csv', 'r') as acnts:
-        acntReader = csv.reader(acnts)
-        rownum = -1
-
-        for line in acntReader:
-            rownum += 1
-
-        return rownum
+    df = pd.read_csv('accounts.csv')
+    return len(df.index)
 
 
 def register(name):
-    name = str(name)
-    with open("accounts.csv", "r") as acnts:
-        acntReader = csv.reader(acnts)
-        namenum = -1
+    df = pd.read_csv('accounts.csv')
 
-        for line in acntReader:
-            namenum += 1
-            if line[0] == name:
-                return "You already registered :P"
-            elif namenum == count():
-                with open("accounts.csv", "a", newline='') as acnts:
-                    acntWriter = csv.writer(acnts)
-                    acntWriter.writerow([name, 0, 0, 0])
-                    return "Bank Registered"
+    if (df["UserId"] == int(name)).any():
+        return "You already registered :P"
+    else:
+        with open('accounts.csv', 'a', newline='') as fd:
+            fdw = csv.writer(fd)
+            fdw.writerow([name, 0, 0, 0])
+        return "Bank Registered"
 
 
 def bal(name):
-    name = str(name)
-    with open("accounts.csv", "r") as acnts:
-        acntReader = csv.reader(acnts)
-        namenum = -1
+    df = pd.read_csv('accounts.csv')
 
-        for line in acntReader:
-            namenum += 1
-            if line[0] == name:
-                balance = line[1]
-                return balance
-            elif namenum == count():
-                return "Please register first using `/bank register`"
-
-
-def obal(name):
-    name = str(name)
-    with open("accounts.csv", "r") as acnts:
-        acntReader = csv.reader(acnts)
-        namenum = -1
-
-        for line in acntReader:
-            namenum += 1
-            if line[0] == name:
-                balance = line[1]
-                return "The user's balance is {}".format(balance)
-            elif namenum == count():
-                return "That user does not exist or has not registered a bank account."
+    if (df["UserId"] == int(name)).any():
+        return int(df.loc[df["UserId"] == int(name), "Balance"])
+    else:
+        return None
 
 
 def top():
@@ -96,65 +64,50 @@ def pay(startuser, enduser, amount):
     if amount < 1:
         return 'The minimum amount of Cocoa Beans is 1'
     balnum = bal(startuser)
-    if balnum == "Please register first using `/bank register`":
+    if balnum is None:
         return "Please register first using `/bank register`"
     if amount > int(balnum):
         return 'You do not have enough Cocoa Beans. Use /bank to see your current balance'
 
-    with open('accounts.csv', 'r') as userl:
-        userReader = csv.reader(userl)
-        namenum = -1
+    df = pd.read_csv('accounts.csv')
 
-        for line in userReader:
-            namenum += 1
-            if line[0] == enduser:
-                df = pd.read_csv('accounts.csv')
-                df.loc[df["UserId"] == int(enduser), "Balance"] += amount
-                df.to_csv('accounts.csv', index=False)
+    if (df["UserId"] == int(enduser)).any():
+        df = pd.read_csv('accounts.csv')
+        df.loc[df["UserId"] == int(enduser), "Balance"] += amount
+        df.to_csv('accounts.csv', index=False)
 
-                df = pd.read_csv('accounts.csv')
-                df.loc[df["UserId"] == int(startuser), "Balance"] -= amount
-                df.to_csv('accounts.csv', index=False)
+        df = pd.read_csv('accounts.csv')
+        df.loc[df["UserId"] == int(startuser), "Balance"] -= amount
+        df.to_csv('accounts.csv', index=False)
 
-                return 'Payment successful!'
-            elif namenum == count():
-                return "That user does not exist or has not registered a bank account."
+        return 'Payment successful!'
+    else:
+        return "That user does not exist or has not registered a bank account."
 
 
 def payday(name):
-    name = str(name)
-    with open("accounts.csv", "r") as acnts:
-        coolReader = csv.reader(acnts)
-        namenum = -1
+    df = pd.read_csv('accounts.csv')
 
-        for row in coolReader:
-            namenum += 1
-            if row[0] == name:
-                timer = float(row[2])
-                timer = int(timer)
-            elif namenum == count():
-                return "Please register first using `/bank register`"
+    if (df["UserId"] == int(name)).any():
+        timer = int(df.loc[df["UserId"] == int(name), "Payday"])
 
-    timeleft = int(time.time()-timer)
-    timeleft = 1800 - timeleft
-    if timeleft > 0:
-        typeT = 'seconds'
-        if timeleft > 60:
-            timeleft = timeleft // 60
-            typeT = 'minutes'
+        timeleft = int(time.time() - timer)
+        timeleft = 1800 - timeleft
+        if timeleft > 0:
+            typeT = 'seconds'
+            if timeleft > 60:
+                timeleft = timeleft // 60
+                typeT = 'minutes'
 
-        fmt = 'You still have to wait {} {}!'
-        return fmt.format(timeleft, typeT)
+            fmt = 'You still have to wait {} {}!'
+            return fmt.format(timeleft, typeT)
 
-    with open('accounts.csv', 'r') as cooll:
-        coollReader = csv.reader(cooll)
+        df.loc[df["UserId"] == int(name), "Balance"] += 1000
+        df.loc[df["UserId"] == int(name), "Payday"] = time.time()
+        df.to_csv('accounts.csv', index=False)
+    else:
+        return "Please register first using `/bank register`"
 
-        for line in coollReader:
-            if line[0] == name:
-                df = pd.read_csv('accounts.csv')
-                df.loc[df["UserId"] == int(name), "Balance"] += 1000
-                df.loc[df["UserId"] == int(name), "Payday"] = time.time()
-                df.to_csv('accounts.csv', index=False)
     return 'Payday! You just got 1000 Cocoa Beans!'
 
 
@@ -193,19 +146,14 @@ def numgame(name, guess, guessnum, answer):
 
 
 def rob(name, ramount):
-    name = str(name)
-    with open("accounts.csv", "r") as acntl:
-        coolReader = csv.reader(acntl)
-        namenum = -1
 
-        for row in coolReader:
-            namenum += 1
-            if row[0] == name:
-                timer = float(row[3])
-                timer = int(timer)
-                balrob = int(row[1])
-            elif namenum == count():
-                return "Please register first using `/bank register`"
+    df = pd.read_csv('accounts.csv')
+
+    if (df["UserId"] == int(name)).any():
+        timer = int(df.loc[df["UserId"] == int(name), "Rob"])
+        balrob = int(df.loc[df["UserId"] == int(name), "Balance"])
+    else:
+        return "Please register first using `/bank register`"
 
     timeleft = int(time.time()-timer)
     timeleft = 60 - timeleft
@@ -218,7 +166,7 @@ def rob(name, ramount):
     elif ramount < 1:
         return 'The minimum amount of Cocoa Beans is 1'
     elif balrob < ramount:
-        return 'You do not have enought Cocoa Beans. Use /bank to see your current balance'
+        return 'You do not have enough Cocoa Beans. Use /bank to see your current balance'
     else:
         if ramount > 249:
             chance = 65
@@ -249,7 +197,7 @@ def rob(name, ramount):
 def definition(word):
     if WikiWork:
         if word is None:
-            return "Please supply the word you are defining with using this format: `/definition WORD`"
+            return "Please supply the word you are defining using this format: `/definition WORD`"
         try:
             wp = wikipedia.summary(word, sentences=2)
             return wp

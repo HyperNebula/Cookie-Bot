@@ -14,7 +14,7 @@ bot.remove_command("help")
 @bot.command(pass_context=True)
 async def bank(ctx, regi: str = None):
     if regi is None:
-        if account.bal(ctx.message.author.id) == "Please register first using `/bank register`":
+        if account.bal(ctx.message.author.id) is None:
             await bot.say("Please register first using `/bank register`")
             return
         else:
@@ -28,8 +28,14 @@ async def bank(ctx, regi: str = None):
         await bot.say("That user is a bot and cannot have an account")
         return
     elif regi.startswith("<@"):
-        await bot.say(account.obal(regi.strip("<@>")))
-        return
+        if account.bal(regi.strip("<@>")) is None:
+            await bot.say("That user does not exist or has not registered a bank account.")
+            return
+        else:
+            user = await bot.get_user_info(regi.strip("<@>"))
+            embed = discord.Embed(title="Bank Account info:", colour=discord.Colour(0xf5a623), description="{}'s balance is: `{}`".format(user.display_name, account.bal(regi.strip("<@>"))))
+            await bot.say(embed=embed)
+            return
 
 
 @bot.command()
@@ -74,7 +80,7 @@ async def payday(ctx):
 
 @bot.command(pass_context=True)
 async def numgame(ctx):
-    if account.bal(ctx.message.author.id) == "Please register first using `/bank register`":
+    if account.bal(ctx.message.author.id) is None:
         await bot.say("Please register first using `/bank register`")
         return
 
@@ -122,9 +128,30 @@ async def definition(*, word: str = None):
     await bot.say(account.definition(word))
 
 
+@bot.command()
+async def count():
+    await bot.say("There are {} users registered".format(account.count()))
+
+
+@bot.command(pass_context=True)
+async def who(ctx):
+    await bot.say("You are **{}**!".format(ctx.message.author))
+
+
+@bot.command(pass_context=True)
+async def messages(ctx):
+    tmp = await bot.say('Calculating messages...')
+    counter = 0
+    async for log in bot.logs_from(ctx.message.channel, limit=1000):
+        if log.author == ctx.message.author:
+            counter += 1
+
+    await bot.edit_message(tmp, 'You have sent {} messages out of the last 1000. This is roughly {}% of them'.format(counter, (counter / 10)))
+
+
 @bot.command(pass_context=True)
 async def help(ctx):
-    embed = discord.Embed(title="Cookie Bot Help", colour=discord.Colour(0xef41), description="This is a list of all the commands and their uses \n\n**Game Commands:**\n- `rob AMOUNT:` Bet an amount of Cocoa Beans and try and steal some more\n- `srob:` robs with 300 Cocoa Beans\n- `payday:` Recieve Cocoa Beans every 30 minutes\n- `numgame:` Starts a number guessing game\n- `roulette:` If you win, you double your Cocoa Beans\n\n**Currency Commands:**\n- `top:` Displays the users with the most amount of Cocoa Beans\n- `bank:` Displays curent balance of bank account\n- `bank register:` Registers a bank account\n- `bank @USERNAME:` Check the balance of anyone that you @mention\n- `pay @USERNAME AMOUNT:` Allows you to give money to users that you @mention\n\n**Utility Commands:**\n- `who:` Says who you are\n- `count:` Lists the number of users registered\n- `messages:` Lists the amount of messages you have sent\n- `definition WORD:` Finds the meaning of the word supplied \n\nCookie-bot made by HyperNebula\nVersion: 3.0 Beta.2")
+    embed = discord.Embed(title="Cookie Bot Help", colour=discord.Colour(0xef41), description="This is a list of all the commands and their uses \n\n**Game Commands:**\n- `rob AMOUNT:` Bet an amount of Cocoa Beans and try and steal some more\n- `srob:` robs with 300 Cocoa Beans\n- `payday:` Recieve Cocoa Beans every 30 minutes\n- `numgame:` Starts a number guessing game\n- `roulette:` If you win, you double your Cocoa Beans\n\n**Currency Commands:**\n- `top:` Displays the users with the most amount of Cocoa Beans\n- `bank:` Displays curent balance of bank account\n- `bank register:` Registers a bank account\n- `bank @USERNAME:` Check the balance of anyone that you @mention\n- `pay @USERNAME AMOUNT:` Allows you to give money to users that you @mention\n\n**Utility Commands:**\n- `who:` Says who you are\n- `count:` Lists the number of users registered\n- `messages:` Lists the amount of messages you have sent\n- `definition WORD:` Finds the meaning of the word supplied \n\nCookie-bot made by HyperNebula\nVersion: 3.0 Beta.3")
 
     await bot.send_message(ctx.message.author, embed=embed)
 
@@ -146,7 +173,7 @@ async def on_ready():
     print(f'Use this link to invite {bot.user.name}:')
     print(f'https://discordapp.com/oauth2/authorize?client_id={bot.user.id}&scope=bot&permissions=8')
     print('--------')
-    print('You are running CookieBot v3.0 Beta.2')
+    print('You are running CookieBot v3.0 Beta.3')
     print('Created by HyperNebula')
     return await bot.change_presence(game=discord.Game(name='/help | The Waiting Game'))
 
