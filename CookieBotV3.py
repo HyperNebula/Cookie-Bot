@@ -142,11 +142,13 @@ async def who(ctx):
 async def messages(ctx):
     tmp = await bot.say('Calculating messages...')
     counter = 0
+    counter2 = 0
     async for log in bot.logs_from(ctx.message.channel, limit=1000):
+        counter2 += 1
         if log.author == ctx.message.author:
             counter += 1
 
-    await bot.edit_message(tmp, 'You have sent {} messages out of the last 1000. This is roughly {}% of them'.format(counter, (counter / 10)))
+    await bot.edit_message(tmp, 'You have sent {} messages out of the last {}. This is roughly {}% of them'.format(counter, counter2, (counter * 100) // counter2))
 
 
 @bot.command(pass_context=True)
