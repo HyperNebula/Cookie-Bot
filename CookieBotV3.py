@@ -177,7 +177,7 @@ async def messages(ctx):
 
 @bot.command(pass_context=True)
 async def help(ctx):
-    embed = discord.Embed(title="Cookie Bot Help", colour=discord.Colour(0xef41), description="This is a list of all the commands and their uses \n\n**Game Commands:**\n- `rob AMOUNT:` Bet an amount of Cocoa Beans and try and steal some more\n- `srob:` robs with 300 Cocoa Beans\n- `payday:` Recieve Cocoa Beans every 30 minutes\n- `numgame:` Starts a number guessing game\n- `roulette:` If you win, you double your Cocoa Beans\n\n**Currency Commands:**\n- `top:` Displays the users with the most amount of Cocoa Beans\n- `bank:` Displays curent balance of bank account\n- `bank register:` Registers a bank account\n- `bank @USERNAME:` Check the balance of anyone that you @mention\n- `pay @USERNAME AMOUNT:` Allows you to give money to users that you @mention\n\n**Utility Commands:**\n- `who:` Says who you are\n- `count:` Lists the number of users registered\n- `messages:` Lists the amount of messages you have sent\n- `definition WORD:` Finds the meaning of the word supplied \n\nCookie-bot made by HyperNebula\nVersion: 3.0 Beta.3")
+    embed = discord.Embed(title="Cookie Bot Help", colour=discord.Colour(0xef41), description="This is a list of all the commands and their uses \n\n**Game Commands:**\n- `rob AMOUNT:` Bet an amount of Cocoa Beans and try and steal some more\n- `srob:` robs with 300 Cocoa Beans\n- `payday:` Recieve Cocoa Beans every 30 minutes\n- `numgame:` Starts a number guessing game\n- `roulette:` If you win, you double your Cocoa Beans\n\n**Currency Commands:**\n- `top:` Displays the users with the most amount of Cocoa Beans\n- `bank:` Displays curent balance of bank account\n- `bank register:` Registers a bank account\n- `bank @USERNAME:` Check the balance of anyone that you @mention\n- `pay @USERNAME AMOUNT:` Allows you to give money to users that you @mention\n\n**Utility Commands:**\n- `who:` Says who you are\n- `count:` Lists the number of users registered\n- `messages:` Lists the amount of messages you have sent\n- `definition WORD:` Finds the meaning of the word supplied \n\nCookie-bot made by HyperNebula\nVersion: 3.0")
 
     await bot.send_message(ctx.message.author, embed=embed)
 
@@ -199,7 +199,7 @@ async def on_ready():
     print(f'Use this link to invite {bot.user.name}:')
     print(f'https://discordapp.com/oauth2/authorize?client_id={bot.user.id}&scope=bot&permissions=8')
     print('--------')
-    print('You are running CookieBot v3.0 Beta.3')
+    print('You are running CookieBot v3.0')
     print('Created by HyperNebula')
     return await bot.change_presence(game=discord.Game(name='/help | The Waiting Game'))
 
