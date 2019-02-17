@@ -123,6 +123,30 @@ async def srob(ctx):
     await bot.say(account.rob(ctx.message.author.id, 300))
 
 
+@bot.command(pass_context=True)
+async def roulette(ctx):
+
+    answer = None
+    while answer not in ('y', 'n'):
+        await bot.say('Are you sure you want to do this? If you loose, then all your money will be gone. (y or n)')
+
+        answer = (await bot.wait_for_message(timeout=10.0, author=ctx.message.author))\
+
+        if answer is None:
+            await bot.say('Sorry, you took to long to answer')
+            return
+
+        answer = answer.content.lower()
+
+        if answer == 'y':
+            await bot.say(account.roulette(ctx.message.author.id))
+        elif answer == 'n':
+            await bot.say('That\'s ok, WIMP! :grin:')
+        else:
+            await bot.say('Please only type "y" or "n"')
+            await asyncio.sleep(0.5)
+
+
 @bot.command()
 async def definition(*, word: str = None):
     await bot.say(account.definition(word))

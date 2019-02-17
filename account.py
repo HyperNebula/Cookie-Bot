@@ -24,7 +24,7 @@ def register(name):
     else:
         with open('accounts.csv', 'a', newline='') as fd:
             fdw = csv.writer(fd)
-            fdw.writerow([name, 0, 0, 0])
+            fdw.writerow([name, 0, 0, 0, 0])
         return "Bank Registered"
 
 
@@ -92,7 +92,7 @@ def payday(name):
         timer = int(df.loc[df["UserId"] == int(name), "Payday"])
 
         timeleft = int(time.time() - timer)
-        timeleft = 1800 - timeleft
+        timeleft = 3600 - timeleft
         if timeleft > 0:
             typeT = 'seconds'
             if timeleft > 60:
@@ -205,3 +205,39 @@ def definition(word):
             return "Please be more specific. That word is too ambiguous"
     else:
         return 'The bot owner has not installed the Wikipedia package.'
+
+
+def roulette(name):
+    df = pd.read_csv('accounts.csv')
+
+    if (df["UserId"] == int(name)).any():
+        timer = int(df.loc[df["UserId"] == int(name), "Roulette"])
+    else:
+        return "Please register first using `/bank register`"
+
+    timeleft = int(time.time() - timer)
+    timeleft = 86400 - timeleft
+
+    if timeleft > 0:
+        typeT = 'seconds'
+        if timeleft > 60:
+            timeleft = timeleft // 60 + 1
+            typeT = 'minutes'
+            if timeleft > 60:
+                timeleft = timeleft // 60
+                typeT = 'hours'
+
+        fmt = 'You still have to wait {} {}!'
+        return fmt.format(timeleft, typeT)
+
+    num = random.randint(1, 6)
+    if num == 1:
+        df.loc[df["UserId"] == int(name), "Balance"] = (bal(name) * 2)
+        df.loc[df["UserId"] == int(name), "Roulette"] = time.time()
+        df.to_csv('accounts.csv', index=False)
+        return 'You are safe! Your balance has doubled!'
+    else:
+        df.loc[df["UserId"] == int(name), "Balance"] = 0
+        df.loc[df["UserId"] == int(name), "Roulette"] = time.time()
+        df.to_csv('accounts.csv', index=False)
+        return 'BOOM! You are dead. :('
