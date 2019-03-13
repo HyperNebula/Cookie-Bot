@@ -113,26 +113,15 @@ def payday(name):
 
 def numgame(name, guess, guessnum, answer):
     if guess == answer:
-        if guessnum == 1:
-            money_in = 1000
-        if guessnum == 2:
-            money_in = 900
-        if guessnum == 3:
-            money_in = 750
-        if guessnum == 4:
-            money_in = 600
-        if guessnum == 5:
-            money_in = 450
-        if guessnum == 6:
-            money_in = 300
+        reward = {1: 1000, 2: 900, 3: 750, 4: 600, 5: 450, 6: 300}
 
         fmt = "You are right! You guessed it in {} guesses. As a reward, you get {} Cocoa Beans"
 
         df = pd.read_csv('accounts.csv')
-        df.loc[df["UserId"] == int(name), "Balance"] += money_in
+        df.loc[df["UserId"] == int(name), "Balance"] += reward[guessnum]
         df.to_csv('accounts.csv', index=False)
 
-        return fmt.format(guessnum, money_in)
+        return fmt.format(guessnum, reward[guessnum])
 
     elif guessnum != 6:
         if guess < answer:
