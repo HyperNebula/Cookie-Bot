@@ -6,7 +6,7 @@ print('If you need help with this, look at the github page: https://github.com/H
 time.sleep(1.5)
 print('What is your bot\'s token?')
 token = input(' ')
-print('What is your bot\'s user id?')
+print('What is your bot\'s Client id?')
 bot_id = input(' ')
 print('What do you want the command prefix to be?')
 prefix = input(' ')
