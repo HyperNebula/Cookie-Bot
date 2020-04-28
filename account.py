@@ -92,7 +92,7 @@ def payday(name):
         timer = int(df.loc[df["UserId"] == int(name), "Payday"])
 
         timeleft = int(time.time() - timer)
-        timeleft = 3600 - timeleft
+        timeleft = 1800 - timeleft
         if timeleft > 0:
             typeT = 'seconds'
             if timeleft > 60:

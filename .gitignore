@@ -197,6 +197,7 @@ dmypy.json
 
 #Added for venv folder
 venv/
+venv1/
 
 # End of https://www.gitignore.io/api/python,pycharm
 .idea/inspectionProfiles/profiles_settings.xml
