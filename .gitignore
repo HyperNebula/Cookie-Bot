@@ -33,11 +33,11 @@
 # When using Gradle or Maven with auto-import, you should exclude module files,
 # since they will be recreated, and may cause churn.  Uncomment if using
 # auto-import.
-# .idea/modules.xml
-# .idea/*.iml
-# .idea/modules
-# *.iml
-# *.ipr
+.idea/modules.xml
+.idea/*.iml
+.idea/modules
+*.iml
+*.ipr
 
 # CMake
 cmake-build-*/
@@ -75,10 +75,10 @@ fabric.properties
 ### PyCharm Patch ###
 # Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
 
-# *.iml
-# modules.xml
-# .idea/misc.xml
-# *.ipr
+*.iml
+modules.xml
+.idea/misc.xml
+*.ipr
 
 # Sonarlint plugin
 .idea/**/sonarlint/
@@ -195,4 +195,9 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+#Added for venv folder
+venv/
+
 # End of https://www.gitignore.io/api/python,pycharm
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/vcs.xml
