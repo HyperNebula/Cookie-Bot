@@ -6,6 +6,6 @@ I have added a python script to simplify adding the Bot token and id. To add the
 
 For a more detail instructions on how to use and setup the bot, visit the [Wiki v3.1](https://github.com/HyperNebula/Cookie-Bot/wiki/Installation-for-v3)
 
-If you want to use the last working version, use this: [Version 3.1](https://github.com/HyperNebula/Cookie-Bot/releases/download/v3.1/v3.1-PythonFiles.zip)
+If you want to use the latest working version, use this: [Version 3.1](https://github.com/HyperNebula/Cookie-Bot/releases/download/v3.1/v3.1-PythonFiles.zip)
 
 [Current Version Download Link](https://github.com/The-Canadians-Friend/Cookie-Bot/archive/master.zip)
